@@ -4,7 +4,7 @@
 
 SDATA SEGMENT WORD PUBLIC 'DATA'
 
-A	DB -5								;- это два коэффициента
+A	DB -5								; - это два коэффициента
 B	DB 17
 ARRAY_X     DB -1,22,-34,12,-51, 68		; - массив чисел X
 ARRAY_Y     DW 6  DUP(0)         		; - массив чисел Y
@@ -31,9 +31,6 @@ ASSUME CS:SCODE,DS:SDATA,SS:SSTACK
 
 START:  MOV AX,SDATA					; Запись сегментного адреса
 MOV DS,AX								; Данных в регистр DS
-MOV AX,SSTACK							; Определение сегмента стека
-MOV SS,AX								; и указателя стека
-MOV SP,OFFSET STACK_POINT
 										; Инициализация исходных данных
 MOV SI,0								; SI содержит индекс массива X
 MOV DI,0								; DI содержит индекс массива Y
@@ -53,13 +50,13 @@ IMUL BL									; AX:=B*X[I]
 POP BX									; Извлечение A*X[I] из стека
 ADD AX,BX								; Y[I]=:A*X[I]+B*X[I]
 
-MOV ARRAY_Y[DI], AX						; запись в массив Y
-INC DI									; увеличение DI на 1
-INC DI									; увеличение DI на 1
-INC SI									; увеличение SI на 1
-LOOP M1									; переход на метку M1
+MOV ARRAY_Y[DI], AX						; Запись в массив Y
+INC DI									; Увеличение DI на 1
+INC DI									; Увеличение DI на 1
+INC SI									; Увеличение SI на 1
+LOOP M1									; Переход на метку M1
 
-MOV AX,4C00H							; выход из программы
-INT 21H									; выполняется функция DOS, номер
-SCODE   ENDS							; конец кодового сегмента программы
-END START								; конец программы
+MOV AX,4C00H							; Выход из программы
+INT 21H									; Выполняется функция DOS, номер
+SCODE   ENDS							; Конец кодового сегмента программы
+END START								; Конец программы
